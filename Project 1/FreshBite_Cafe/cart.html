@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fresh Bite - Cart</title>
+  <link rel="stylesheet" href="cart.css">
+  <script src="cart.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Your Cart</h1>
+  </header>
+
+  <main>
+    <!-- Cart Items -->
+    <section>
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="cart-items"></tbody>
+      </table>
+      <h3>Total: ₦<span id="cart-total">0</span></h3>
+    </section>
+
+    <!-- Customer Details -->
+    <section>
+      <h2>Customer Details</h2>
+      <form id="orderForm">
+        <input type="text" id="customerName" placeholder="Enter your name" required>
+        <input type="number" id="tableNumber" placeholder="Enter table number" required>
+        <button type="submit">Place Order</button>
+      </form>
+    </section>
+
+    <!-- Order Confirmation -->
+    <section id="orderConfirmation" style="display:none;">
+      <h2>✅ Order Confirmed!</h2>
+      <p id="orderDetails"></p>
+    </section>
+  </main>
+      <!-- Back to Menu -->
+    <section style="text-align:center; margin-top: 20px;">
+      <a href="menu1.html" class="back-button">⬅ Back to Menu</a>
+    </section>
+
+</body>
+</html>
