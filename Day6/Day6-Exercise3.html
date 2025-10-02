@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theme Switcher</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      transition: background 0.3s, color 0.3s;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+    }
+    .light {
+      background: #ffffff;
+      color: #000000;
+    }
+    .dark {
+      background: #121212;
+      color: #ffffff;
+    }
+    .blue {
+      background: #001f3f;
+      color: #00c3ff;
+    }
+      
+    .red {
+      background: #3f0000;
+      color: #a51d1d;
+    }
+
+    .btn-light { background: #f0f0f0; }
+    .btn-dark { background: #333; color: #fff; }
+    .btn-blue { background: #007BFF; color: #fff; }
+        .btn-red { background: #e00c0c; color: #fff; }
+  </style>
+</head>
+<body>
+  <h2> Theme Switcher</h2>
+  <p>Choose your preferred theme:</p>
+  <button class="btn-light" onclick="setTheme('light')">Light Mode</button>
+  <button class="btn-dark" onclick="setTheme('dark')">Dark Mode</button>
+  <button class="btn-blue" onclick="setTheme('blue')">Blue Mode</button>
+    <button class="btn-red" onclick="setTheme('red')">Red Mode</button>
+
+  <script>
+    function setTheme(theme) {
+      document.body.className = theme;
+      localStorage.setItem("theme", theme);
+    }
+
+    // Load saved theme on page load
+    window.onload = () => {
+      const savedTheme = localStorage.getItem("theme") || "light";
+      setTheme(savedTheme);
+    };
+  </script>
+</body>
+

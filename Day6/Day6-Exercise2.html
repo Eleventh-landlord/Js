@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visit Counter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 60px;
+    }
+    #counter {
+      font-size: 20px;
+      margin: 15px 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      background: #007BFF;
+      color: white;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    #firstVisit {
+      margin-top: 10px;
+      font-style: italic;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h2> Welcome to the Visit Counter</h2>
+  <div id="counter"></div>
+  <div id="firstVisit"></div>
+  <button id="resetBtn">Reset Counter</button>
+
+  <script>
+    const counterDiv = document.getElementById("counter");
+    const firstVisitDiv = document.getElementById("firstVisit");
+    const resetBtn = document.getElementById("resetBtn");
+
+    // Check localStorage
+    let visitCount = localStorage.getItem("visitCount");
+    let firstVisitDate = localStorage.getItem("firstVisit");
+
+    if (visitCount) {
+      visitCount = parseInt(visitCount) + 1;
+      localStorage.setItem("visitCount", visitCount);
+    } else {
+      visitCount = 1;
+      localStorage.setItem("visitCount", visitCount);
+      firstVisitDate = new Date().toLocaleString();
+      localStorage.setItem("firstVisit", firstVisitDate);
+    }
+
+    counterDiv.textContent = `You have visited ${visitCount} time${visitCount > 1 ? "s" : ""}.`;
+
+    if (firstVisitDate) {
+      firstVisitDiv.textContent = `Your first visit was on: ${firstVisitDate}`;
+    }
+
+    // Reset button
+    resetBtn.addEventListener("click", () => {
+      localStorage.removeItem("visitCount");
+      localStorage.removeItem("firstVisit");
+      counterDiv.textContent = "Counter reset! Refresh the page to start again.";
+      firstVisitDiv.textContent = "";
+    });
+  </script>
+</body>
+</html>
+
