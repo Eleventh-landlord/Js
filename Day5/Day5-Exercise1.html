@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Changer</title>
+ 
+</head>
+<body>
+  <p id="text">Click the button to change Color</p>
+  <button onclick="changeColor()">Change Color</button>
+
+<script>
+    function getRandomColor() {
+      return "#" + Math.floor(Math.random() * 16777215).toString(16);
+    }
+
+    function changeColor() {
+      const text = document.getElementById("text");
+      text.style.color = getRandomColor();        // Change text color
+      document.body.style.backgroundColor = getRandomColor(); // Change background color
+    }
+</script>
+</body>
+</html>
+
+
