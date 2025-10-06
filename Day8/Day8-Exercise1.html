@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Auto-Slideshow</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 30px;
+      background: #f0f0f0;
+    }
+    .slideshow {
+      width: 500px;
+      height: 300px;
+      margin: auto;
+      border: 3px solid #333;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #000;
+    }
+    .slideshow img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+    }
+    #pauseBtn { background: #e74c3c; color: white; }
+    #resumeBtn { background: #2ecc71; color: white; }
+  </style>
+</head>
+<body>
+  <h2>Simple Image Gallery</h2>
+
+  <div class="slideshow">
+    <img id="slide" src="js\images\initial.JPG" alt="Slideshow Image">
+  </div>
+
+  <div>
+    <button id="pauseBtn">Pause</button>
+    <button id="resumeBtn">Resume</button>
+  </div>
+
+  <script>
+    const images = [
+      "https://picsum.photos/800/500?random=1",
+      "https://picsum.photos/800/500?random=2",
+      "https://picsum.photos/800/500?random=3",
+      "https://picsum.photos/800/500?random=4",
+      "https://picsum.photos/800/500?random=5"
+    ];
+
+    let index = 0;
+    let slideshow = document.getElementById("slide");
+    let interval = setInterval(nextImage, 3000);
+
+    function nextImage() {
+      index = (index + 1) % images.length;
+      slideshow.src = images[index];
+    }
+
+    // Pause button
+    document.getElementById("pauseBtn").addEventListener("click", () => {
+      clearInterval(interval);
+    });
+
+    // Resume button
+    document.getElementById("resumeBtn").addEventListener("click", () => {
+      clearInterval(interval); // prevent multiple intervals
+      interval = setInterval(nextImage, 3000);
+    });
+  </script>
+</body>
+</html>

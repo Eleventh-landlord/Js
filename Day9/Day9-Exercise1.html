@@ -1,0 +1,15 @@
+<script>
+    function tellJoke(){
+        return new Promise((resolve) => {
+            console.log("Processing joke")
+
+            setTimeout (() => {
+                resolve("here is a funny joke");
+            },3000);
+        });
+    }
+
+    tellJoke().then ((message) => {
+        console.log(message);
+});
+</script>

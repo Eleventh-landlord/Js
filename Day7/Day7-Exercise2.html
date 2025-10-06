@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Report Card</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f2f5f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .student {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      max-width: 400px;
+      margin: 15px auto;
+      padding: 15px;
+    }
+
+    .passed {
+      color: green;
+      font-weight: bold;
+    }
+
+    .failed {
+      color: red;
+      font-weight: bold;
+    }
+
+    .details {
+      margin-top: 10px;
+      font-size: 1.1em;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #addStudentForm {
+      background: white;
+      max-width: 420px;
+      margin: 20px auto;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    input {
+      width: 90%;
+      margin: 8px 0;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎓 Student Report Card</h1>
+
+  <div id="addStudentForm">
+    <h3>Add New Student</h3>
+    <input type="text" id="studentName" placeholder="Enter student name">
+    <input type="number" id="studentAge" placeholder="Enter age">
+    <input type="text" id="studentGrades" placeholder="Enter grades (comma separated)">
+    <button id="addBtn">Add Student</button>
+  </div>
+
+  <div id="student-list"></div>
+
+  <script>
+    // Step 1: Define the Student class
+    class Student {
+      constructor(name, age, grades) {
+        this.name = name;
+        this.age = age;
+        this.grades = grades;
+      }
+
+      // Step 2: Calculate average grade
+      calculateAverage() {
+        const sum = this.grades.reduce((acc, grade) => acc + grade, 0);
+        return (sum / this.grades.length).toFixed(2);
+      }
+
+      // Step 3: Get student details
+      getDetails() {
+        const avg = this.calculateAverage();
+        const status = avg < 50 ? "❌ Failed" : "✅ Passed";
+        return `${this.name}, Age: ${this.age}, Average: ${avg} — ${status}`;
+      }
+    }
+
+    // Sample students
+    const students = [
+      new Student("Alice", 17, [80, 75, 90]),
+      new Student("Bob", 16, [40, 45, 38]),
+    ];
+
+    const studentList = document.getElementById("student-list");
+
+    function displayStudents() {
+      studentList.innerHTML = "";
+      students.forEach((student) => {
+        const div = document.createElement("div");
+        div.className = "student";
+        const avg = student.calculateAverage();
+        const passed = avg >= 50;
+        div.innerHTML = `
+          <p class="details">${student.getDetails()}</p>
+          <p class="${passed ? 'passed' : 'failed'}">${passed ? "✅ Passed" : "❌ Failed"}</p>
+        `;
+        studentList.appendChild(div);
+      });
+    }
+
+    displayStudents();
+
+    // Add new student form
+    document.getElementById("addBtn").addEventListener("click", () => {
+      const name = document.getElementById("studentName").value.trim();
+      const age = parseInt(document.getElementById("studentAge").value);
+      const grades = document.getElementById("studentGrades").value
+        .split(",")
+        .map(num => parseFloat(num));
+
+      if (name && age && grades.length) {
+        students.push(new Student(name, age, grades));
+        displayStudents();
+
+        // Clear inputs
+        document.getElementById("studentName").value = "";
+        document.getElementById("studentAge").value = "";
+        document.getElementById("studentGrades").value = "";
+      } else {
+        alert("Please fill all fields correctly.");
+      }
+    });
+  </script>
+</body>
+</html>

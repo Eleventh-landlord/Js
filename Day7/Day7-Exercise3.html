@@ -1,0 +1,173 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Inheritance</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f3f5fa;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .vehicle {
+      background: white;
+      max-width: 450px;
+      margin: 15px auto;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .old {
+      color: red;
+      font-weight: bold;
+    }
+
+    .new {
+      color: green;
+      font-weight: bold;
+    }
+
+    #addForm {
+      background: white;
+      max-width: 480px;
+      margin: 20px auto;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    input, select {
+      width: 90%;
+      padding: 8px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🚗 Vehicle Inheritance Example</h1>
+
+  <div id="addForm">
+    <h3>Add a New Car</h3>
+    <input type="text" id="brand" placeholder="Enter brand">
+    <input type="text" id="model" placeholder="Enter model">
+    <input type="number" id="year" placeholder="Enter year">
+    <select id="fuelType">
+      <option value="">Select fuel type</option>
+      <option value="Petrol">Petrol</option>
+      <option value="Diesel">Diesel</option>
+      <option value="Electric">Electric</option>
+      <option value="Hybrid">Hybrid</option>
+    </select>
+    <button id="addBtn">Add Vehicle</button>
+  </div>
+
+  <div id="vehicle-list"></div>
+
+  <script>
+    // Step 1: Vehicle base class
+    class Vehicle {
+      constructor(brand, model, year) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+      }
+
+      // Step 2: Method to get info
+      getInfo() {
+        return `${this.brand} ${this.model} (${this.year})`;
+      }
+
+      // Challenge: Check if vehicle is old
+      isOld() {
+        const currentYear = new Date().getFullYear();
+        return currentYear - this.year > 10;
+      }
+    }
+
+    // Step 3: Car class extending Vehicle
+    class Car extends Vehicle {
+      constructor(brand, model, year, fuelType) {
+        super(brand, model, year);
+        this.fuelType = fuelType;
+      }
+
+      // Step 4: Override getInfo()
+      getInfo() {
+        return `${this.brand} ${this.model} (${this.year}) - Fuel: ${this.fuelType}`;
+      }
+    }
+
+    // Some sample cars
+    const vehicles = [
+      new Car("Toyota", "Corolla", 2012, "Petrol"),
+      new Car("Tesla", "Model 3", 2023, "Electric"),
+    ];
+
+    const listDiv = document.getElementById("vehicle-list");
+
+    function displayVehicles() {
+      listDiv.innerHTML = "";
+      vehicles.forEach((v) => {
+        const div = document.createElement("div");
+        div.className = "vehicle";
+        div.innerHTML = `
+          <p>${v.getInfo()}</p>
+          <p>Status: <span class="${v.isOld() ? 'old' : 'new'}">
+            ${v.isOld() ? "🚨 Old Vehicle (10+ years)" : "✅ New Vehicle"}
+          </span></p>
+        `;
+        listDiv.appendChild(div);
+      });
+    }
+
+    displayVehicles();
+
+    // Handle Add Vehicle
+    document.getElementById("addBtn").addEventListener("click", () => {
+      const brand = document.getElementById("brand").value.trim();
+      const model = document.getElementById("model").value.trim();
+      const year = parseInt(document.getElementById("year").value);
+      const fuelType = document.getElementById("fuelType").value;
+
+      if (brand && model && year && fuelType) {
+        const newCar = new Car(brand, model, year, fuelType);
+        vehicles.push(newCar);
+        displayVehicles();
+
+        // Clear inputs
+        document.getElementById("brand").value = "";
+        document.getElementById("model").value = "";
+        document.getElementById("year").value = "";
+        document.getElementById("fuelType").value = "";
+      } else {
+        alert("Please fill in all fields.");
+      }
+    });
+  </script>
+
+</body>
+</html>

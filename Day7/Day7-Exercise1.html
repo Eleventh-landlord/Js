@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Class Example</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f4f9;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+    .book {
+      background: white;
+      padding: 15px;
+      margin: 10px auto;
+      border-radius: 8px;
+      max-width: 400px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: gray;
+      cursor: not-allowed;
+    }
+    .status {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <h1>📚 Book Library</h1>
+
+  <div id="book-list"></div>
+
+  <script>
+    // Define the Book class
+    class Book {
+      constructor(title, author, year) {
+        this.title = title;
+        this.author = author;
+        this.year = year;
+        this.isBorrowed = false;
+      }
+
+      getSummary() {
+        return `Book: ${this.title} by ${this.author} (${this.year})`;
+      }
+
+      borrowBook() {
+        if (!this.isBorrowed) {
+          this.isBorrowed = true;
+          return `${this.title} has been borrowed.`;
+        } else {
+          return `${this.title} is already borrowed.`;
+        }
+      }
+    }
+
+    // Create books
+    const books = [
+      new Book("The Alchemist", "Paulo Coelho", 1988),
+      new Book("1984", "George Orwell", 1949),
+    ];
+
+    // Display books on the page
+    const bookList = document.getElementById("book-list");
+
+    books.forEach((book, index) => {
+      const div = document.createElement("div");
+      div.className = "book";
+      div.innerHTML = `
+        <p>${book.getSummary()}</p>
+        <button id="borrow-${index}">Borrow</button>
+        <p class="status" id="status-${index}"></p>
+      `;
+      bookList.appendChild(div);
+
+      // Handle borrow button click
+      const button = document.getElementById(`borrow-${index}`);
+      const status = document.getElementById(`status-${index}`);
+
+      button.addEventListener("click", () => {
+        status.textContent = book.borrowBook();
+        if (book.isBorrowed) {
+          button.disabled = true;
+        }
+      });
+    });
+  </script>
+</body>
+</html>

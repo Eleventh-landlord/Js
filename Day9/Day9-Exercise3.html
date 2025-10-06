@@ -1,0 +1,22 @@
+<script>
+const orders = ["Coffee", "Cake", "Juice"];
+
+function prepareOrder(order) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(` ${order} ready`);
+    }, 2000); 
+  });
+}
+
+async function processOrders() {
+  for (const order of orders) {
+    const message = await prepareOrder(order);
+    console.log(message);
+  }
+}
+
+
+processOrders();
+
+</script>

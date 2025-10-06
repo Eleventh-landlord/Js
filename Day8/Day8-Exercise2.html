@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Typing Effect</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    p {
+      font-size: 24px;
+      border-right: 2px solid black;
+      padding-right: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .blink {
+      animation: blink 0.8s step-start infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h2> Typing Effect</h2>
+  <p id="text"></p>
+  <button id="restartBtn">Restart</button>
+
+  <script>
+    const textElement = document.getElementById("text");
+    const restartBtn = document.getElementById("restartBtn");
+    const message = "Welcome to JavaScript Timers!";
+    let index = 0;
+    let typingTimeout;
+    let blinking = false;
+
+    function typeEffect() {
+      if (index < message.length) {
+        textElement.textContent += message.charAt(index);
+        index++;
+        typingTimeout = setTimeout(typeEffect, 100);
+      } else {
+        startBlink();
+      }
+    }
+
+    function startBlink() {
+      if (!blinking) {
+        textElement.classList.add("blink");
+        blinking = true;
+      }
+    }
+
+    function resetTyping() {
+      clearTimeout(typingTimeout);
+      textElement.textContent = "";
+      textElement.classList.remove("blink");
+      index = 0;
+      blinking = false;
+      typeEffect();
+    }
+
+    restartBtn.addEventListener("click", resetTyping);
+
+    // Start automatically on page load
+    typeEffect();
+  </script>
+</body>
+</html>
